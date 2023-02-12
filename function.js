@@ -18,10 +18,11 @@ window.function = function (upc) {
 
   let result;
 
-  return fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`).then(
-    (res) => {
-      console.log(res);
-      return res;
-    }
-  );
+  return fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`, {
+    method: "GET",
+    // mode: "same-origin",
+  }).then((res) => {
+    console.log(res);
+    return res;
+  });
 };
