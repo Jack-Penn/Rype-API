@@ -1,7 +1,7 @@
 // The function here takes the parameters that you
 // have declared in the `glide.json` file, in the
 // same order.
-window.function = function (str, start, end) {
+window.function = function (upc) {
   // For each parameter, its `.value` contains
   // either its value in the type you've declared,
   // or it's `undefined`.  This is a good place to
