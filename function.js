@@ -8,8 +8,6 @@ window.function = function (upc) {
   // extract the `.value`s and assign default
   // values.
   upc = upc.value ?? "";
-  start = start.value ?? 0;
-  end = end.value;
 
   // Your function should return the exact type
   // you've declared for the `result` in
