@@ -7,7 +7,7 @@ window.function = function (str, start, end) {
   // or it's `undefined`.  This is a good place to
   // extract the `.value`s and assign default
   // values.
-  str = str.value ?? "";
+  upc = upc.value ?? "";
   start = start.value ?? 0;
   end = end.value;
 
@@ -16,5 +16,14 @@ window.function = function (str, start, end) {
   // `glide.json`, or `undefined` if there's an
   // error or no result can be produced, because a
   // required input is `undefined`, for example.
-  return str.substring(start, end);
+  // return str.substring(start, end);
+
+  let result;
+
+  return fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`).then(
+    (res) => {
+      console.log(res);
+      return res;
+    }
+  );
 };
