@@ -5,11 +5,15 @@
     <title>Glide Yes-Code</title>
   </head>
   <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script src="function.js"></script>
     <script src="driver.js"></script>
     <input value="037422443177" id="upcInput" />
-    <button onclick="testFunction()">Test</button>
+    <button id="test-button">Test</button>
     <p id="output"></p>
+
+    <input type="file" onchange="uploadFile(this)" />
 
     <script src="test.js"></script>
   </body>

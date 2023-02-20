@@ -7,7 +7,7 @@ window.function = function (upc) {
   // or it's `undefined`.  This is a good place to
   // extract the `.value`s and assign default
   // values.
-  upc = upc.value ?? "";
+  code = upc.value ?? "";
 
   // Your function should return the exact type
   // you've declared for the `result` in
@@ -16,13 +16,21 @@ window.function = function (upc) {
   // required input is `undefined`, for example.
   // return str.substring(start, end);
 
-  let result;
+  // return fetch(`/api/upc?code=${code}`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Accept: "application/json",
+  //   },
+  // }).then((res) => res.json());
 
-  return fetch(`https://api.upcitemdb.com/prod/trial/lookup?upc=${upc}`, {
-    method: "GET",
-    // mode: "same-origin",
-  }).then((res) => {
-    console.log(res);
-    return res;
-  });
+  return test("/api/recepies", { query: "Burrito", number: 2 });
 };
+
+function test(endpoint, params) {
+  return axios
+    .get(endpoint, {
+      params,
+    })
+    .then((res) => res.data);
+}
