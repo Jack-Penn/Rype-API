@@ -21,7 +21,8 @@ app.get("/api/upc", (req, res) => {
 });
 
 app.get("/api/findRecepies", (req, res) => {
-  spoonacular.recepies.findRecepies(req.query).then((data) => {
+  console.log(spoonacular);
+  spoonacular.recepies.find(req.query).then((data) => {
     res.send(data);
   });
 });
