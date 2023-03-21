@@ -1,12 +1,16 @@
 // The function here takes the parameters that you
 // have declared in the `glide.json` file, in the
 // same order.
-window.function = function (image) {
+window.function = async function (image) {
   // For each parameter, its `.value` contains
   // either its value in the type you've declared,
   // or it's `undefined`.  This is a good place to
   // extract the `.value`s and assign default
   // values.
+
+  bs = new BarcodeScanner();
+  const imageData = await bs.fetchImage(image);
+  await scanBarcode(imageData);
 
   console.log(image);
 
