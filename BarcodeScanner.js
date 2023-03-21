@@ -58,7 +58,7 @@ function getImageDimensions(data) {
 
 exports.scanBarcode = async (image) => {
   console.log("Scanning Barcode");
-  bs = new BarcodeScanner();
-  const imageData = await bs.fetchImage(image);
+  // bs = new BarcodeScanner();
+  const imageData = await fetchImage(image);
   await scanBarcode(imageData);
 };

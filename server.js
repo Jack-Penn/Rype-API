@@ -10,7 +10,7 @@ const app = express();
 const cors = require("cors");
 app.use(
   cors({
-    origin: "https://go.glideapps.com",
+    origin: "*", //"https://go.glideapps.com",
   })
 );
 
@@ -58,7 +58,7 @@ app.post("/api/classifyIngredient", (req, res) => {
 
 app.post("/api/scanBarcode", (req, res) => {
   console.log(req.body);
-  bacodScanner(req.body.url).then((data) => {
+  scanBarcode(req.body.url).then((data) => {
     res.send(data);
   });
 });
