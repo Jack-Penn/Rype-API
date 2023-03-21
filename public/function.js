@@ -8,10 +8,6 @@ window.function = async function (image) {
   // extract the `.value`s and assign default
   // values.
 
-  bs = new BarcodeScanner();
-  const imageData = await bs.fetchImage(image);
-  await scanBarcode(imageData);
-
   console.log(image);
 
   // code = upc.value ?? "";
@@ -31,7 +27,9 @@ window.function = async function (image) {
   //   },
   // }).then((res) => res.json());
 
-  return "";
+  test("/api/scanBarcode", { url: image });
+
+  return "test return";
   // return test("/api/recepies", { query: "Burrito", number: 2 });
 };
 

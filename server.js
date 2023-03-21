@@ -17,6 +17,7 @@ app.use(
 // Import custom modules
 const { upcLookup } = require("./upc"); // Module for looking up product information by UPC code
 const spoonacular = require("./spoonacular"); // Module for querying the Spoonacular API for recipe and ingredient data
+const { scanBarcode } = require("./BarcodeScanner");
 
 // Use body-parser middleware to parse JSON request bodies
 app.use(bodyParser.json());
@@ -51,6 +52,13 @@ app.post("/api/classifyIngredient", (req, res) => {
   console.log(req.body);
   // Call the Spoonacular API to classify the image and send response
   spoonacular.ingredients.classifyImage(req.body.image).then((data) => {
+    res.send(data);
+  });
+});
+
+app.post("/api/scanBarcode", (req, res) => {
+  console.log(req.body);
+  bacodScanner(req.body.url).then((data) => {
     res.send(data);
   });
 });
