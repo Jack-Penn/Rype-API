@@ -1,14 +1,31 @@
 const axios = require('axios');
 const { MultiFormatReader, BarcodeFormat, DecodeHintType, RGBLuminanceSource, HybridBinarizer } = require('@zxing/library');
+const { PNG } = require('pngjs');
 
 async function fetchImage(url) {
   const response = await axios.get(url, {
     responseType: 'arraybuffer',
   });
-  return new Uint8Array(response.data);
+  return Buffer.from(response.data);
 }
 
-async function scanBarcode(imageData) {
+function parsePNGToImageData(pngBuffer) {
+  return new Promise((resolve, reject) => {
+    new PNG().parse(pngBuffer, (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        const rgbaImageData = new Uint8Array(data.width * data.height * 4);
+        for (let i = 0; i < data.data.length; i++) {
+          rgbaImageData[i] = data.data[i];
+        }
+        resolve({ data: rgbaImageData, width: data.width, height: data.height });
+      }
+    });
+  });
+}
+
+async function scanBarcode(imageData, width, height) {
   const hints = new Map();
   const formats = [BarcodeFormat.QR_CODE, BarcodeFormat.CODE_128, BarcodeFormat.EAN_13];
   hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
@@ -16,7 +33,6 @@ async function scanBarcode(imageData) {
   const reader = new MultiFormatReader();
   reader.setHints(hints);
 
-  const { width, height } = getImageDimensions(imageData);
   const luminanceSource = new RGBLuminanceSource(imageData, width, height);
   const binaryBitmap = new HybridBinarizer(luminanceSource);
 
@@ -28,18 +44,10 @@ async function scanBarcode(imageData) {
   }
 }
 
-function getImageDimensions(data) {
-  if (data[0] === 0x89 && data[1] === 0x50 && data[2] === 0x4e && data[3] === 0x47) {
-    const width = (data[16] << 24) | (data[17] << 16) | (data[18] << 8) | data[19];
-    const height = (data[20] << 24) | (data[21] << 16) | (data[22] << 8) | data[23];
-    return { width, height };
-  }
-  throw new Error('Invalid PNG file');
-}
-
 exports.scanBarcode = async (image) => {
   console.log("Scanning Barcode");
   // bs = new BarcodeScanner();
-  const imageData = await fetchImage(image);
-  await scanBarcode(imageData);
+  const pngBuffer = await fetchImage(image);
+  const { data, width, height } = await parsePNGToImageData(pngBuffer);
+  await scanBarcode(data, width, height);
 };
