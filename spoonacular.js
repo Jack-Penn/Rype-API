@@ -59,7 +59,7 @@ const fs = require("fs"); // import fs to read/write files
       },
     },
 
-    products: {}, // define an empty object for product-related functions (not currently implemented)
+    products: {},
   });
 
   function spoonacularGet(endpoint, defaultParams = {}) {

@@ -6,9 +6,9 @@
     "author": "Jack Penn",
     "params": [
       {
-        "name": "upc",
-        "displayName": "UPC Code",
-        "type": "string"
+        "name": "image rec",
+        "displayName": "image rec",
+        "type": "image-uri"
       }
     ],
     "result": {

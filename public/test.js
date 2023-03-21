@@ -27,3 +27,35 @@ function uploadFile(input) {
     reader.readAsBinaryString(input.files[0]);
   }
 }
+
+function submitForm() {
+  const form = document.querySelector("form");
+  const formData = new FormData(form);
+  const imageFile = formData.get("image");
+
+  const reader = new FileReader();
+  reader.readAsArrayBuffer(imageFile);
+  reader.onload = function () {
+    const binaryData = reader.result;
+    fetch("/api/classifyIngredient", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
+      body: binaryData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("API request failed!");
+        }
+      })
+      .then((responseText) => {
+        alert("API request successful! Response: " + responseText);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+}

@@ -13,7 +13,13 @@
     <button id="test-button">Test</button>
     <p id="output"></p>
 
-    <input type="file" onchange="uploadFile(this)" />
+    <!-- <input type="file" onchange="uploadFile(this)" /> -->
+    <form enctype="multipart/form-data" method="POST">
+      <input type="file" name="image" />
+      <br />
+      <br />
+      <input type="button" value="Submit" onclick="submitForm()" />
+    </form>
 
     <script src="test.js"></script>
   </body>
