@@ -40,11 +40,86 @@ app.get("/api/upc", (req, res) => {
 
 // Define route for the recipe search API
 app.get("/api/findRecepies", (req, res) => {
-  console.log(spoonacular);
   // Call the Spoonacular API to search for recipes and send response
-  spoonacular.recepies.find(req.query).then((data) => {
-    res.send(data);
-  });
+  setTimeout(
+    () =>
+      res.send(
+        // "test delayed server response"
+
+        {
+          results: [
+            {
+              id: 782585,
+              title: "Cannellini Bean and Asparagus Salad with Mushrooms",
+              image: "https://spoonacular.com/recipeImages/782585-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 716426,
+              title: "Cauliflower, Brown Rice, and Vegetable Fried Rice",
+              image: "https://spoonacular.com/recipeImages/716426-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 715497,
+              title: "Berry Banana Breakfast Smoothie",
+              image: "https://spoonacular.com/recipeImages/715497-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 715415,
+              title: "Red Lentil Soup with Chicken and Turnips",
+              image: "https://spoonacular.com/recipeImages/715415-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 716406,
+              title: "Asparagus and Pea Soup: Real Convenience Food",
+              image: "https://spoonacular.com/recipeImages/716406-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 644387,
+              title: "Garlicky Kale",
+              image: "https://spoonacular.com/recipeImages/644387-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 715446,
+              title: "Slow Cooker Beef Stew",
+              image: "https://spoonacular.com/recipeImages/715446-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 782601,
+              title: "Red Kidney Bean Jambalaya",
+              image: "https://spoonacular.com/recipeImages/782601-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 795751,
+              title: "Chicken Fajita Stuffed Bell Pepper",
+              image: "https://spoonacular.com/recipeImages/795751-312x231.jpg",
+              imageType: "jpg",
+            },
+            {
+              id: 766453,
+              title: "Hummus and Za'atar",
+              image: "https://spoonacular.com/recipeImages/766453-312x231.jpg",
+              imageType: "jpg",
+            },
+          ],
+          offset: 0,
+          number: 10,
+          totalResults: 5221,
+        }
+      ),
+    1000
+  );
+  console.log("sent recepies!");
+  // spoonacular.recepies.find(req.query).then((data) => {
+  //   res.send(data);
+  // });
 });
 
 // Define route for the ingredient classification API
@@ -57,10 +132,15 @@ app.post("/api/classifyIngredient", (req, res) => {
 });
 
 app.post("/api/scanBarcode", (req, res) => {
-  console.log(req.body);
+  console.log(req.body.url);
   scanBarcode(req.body.url).then((data) => {
     res.send(data);
   });
+});
+
+app.post("/api/test", (req, res) => {
+  console.log(req);
+  res.send("response from server");
 });
 
 // Start the server and log a message to the console
