@@ -39,7 +39,7 @@ app.get("/api/upc", (req, res) => {
 });
 
 // Define route for the recipe search API
-app.get("/api/findRecepies", (req, res) => {
+app.get("/api/findRecipes", (req, res) => {
   // Call the Spoonacular API to search for recipes and send response
   setTimeout(
     () =>
