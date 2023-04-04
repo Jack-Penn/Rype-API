@@ -8,7 +8,10 @@ const fs = require("fs"); // import fs to read/write files
     // define a Spoonacular API object and export it to be used in other files
     recepies: {
       // define an object with recipe-related functions
-      find: spoonacularGet("https://api.spoonacular.com/recipes/complexSearch"), // define a 'find' function to search for recipes using the Spoonacular API
+      find: spoonacularGet(
+        "https://api.spoonacular.com/recipes/complexSearch",
+        { instructionsRequired: true }
+      ), // define a 'find' function to search for recipes using the Spoonacular API
       getInfo: (ids) => {
         // define a 'getInfo' function to retrieve recipe information using the Spoonacular API
         spoonacularGet("https://api.spoonacular.com/recipes/informationBulk", {
@@ -32,31 +35,19 @@ const fs = require("fs"); // import fs to read/write files
         "https://api.spoonacular.com/food/ingredients/",
         "/substitutes",
       ]),
-      getUpcInfo: getDataUrl([
-        // define a 'getUpcInfo' function to retrieve product information using a UPC code and the Spoonacular API
-        "https://api.spoonacular.com/food/products/upc/",
-      ]),
+      getUpcInfo: (upc) =>
+        spoonacularGet(
+          "https://api.spoonacular.com/food/products/upc/" + upc
+        )(),
+      //   getDataUrl([
+      //   // define a 'getUpcInfo' function to retrieve product information using a UPC code and the Spoonacular API
+      //   "https://api.spoonacular.com/food/products/upc/",
+      // ]),
 
-      classifyImage: (file) => {
-        // define a 'classifyImage' function to classify an image of an ingredient using the Spoonacular API
-        return axios
-          .post(
-            "https://api.spoonacular.com/food/images/classify",
-            {
-              file,
-              apiKey: process.env.SPOON_API_KEY, // pass the Spoonacular API key as a parameter
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          )
-          .then(
-            (res) => res.data, // return the API response data
-            (error) => console.log(error) // log any errors that occur
-          );
-      },
+      classifyImage: (url) =>
+        spoonacularGet("https://api.spoonacular.com/food/images/classify")({
+          imageUrl: url,
+        }),
     },
 
     products: {},
@@ -100,8 +91,13 @@ const fs = require("fs"); // import fs to read/write files
           (res, piece, i) => res + (args[i] ? args[i] : "") + piece,
           args[0]
         );
+
+      console.log("api url call:" + url);
       // Use the constructed URL to make a GET request
-      spoonacularGet(url, defaultParams)(args.slice(urlPieces.length - 1));
+      return spoonacularGet(
+        url,
+        defaultParams
+      )(args.slice(urlPieces.length - 1));
     };
   }
 }

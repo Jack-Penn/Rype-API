@@ -27,9 +27,9 @@ window.function = async function (image) {
   //   },
   // }).then((res) => res.json());
 
-  test("/api/scanBarcode", { url: image });
+  return await test("/api/upc", { code: "073420524401" });
 
-  return "test return";
+  // return "test return";
   // return test("/api/recepies", { query: "Burrito", number: 2 });
 };
 
