@@ -14,9 +14,12 @@ const fs = require("fs"); // import fs to read/write files
       ), // define a 'find' function to search for recipes using the Spoonacular API
       getInfo: (ids) => {
         // define a 'getInfo' function to retrieve recipe information using the Spoonacular API
-        spoonacularGet("https://api.spoonacular.com/recipes/informationBulk", {
-          includeNutrition: false, // set a default value for the 'includeNutrition' parameter
-        })({
+        return spoonacularGet(
+          "https://api.spoonacular.com/recipes/informationBulk",
+          {
+            includeNutrition: false, // set a default value for the 'includeNutrition' parameter
+          }
+        )({
           ...arguments, // create a new object with the 'ids' argument and any other arguments passed to the function
           ids: Array.isArray(ids) ? ids.join(",") : ids, // if 'ids' is an array, join it into a comma-separated string; otherwise, use 'ids' as is
         });
